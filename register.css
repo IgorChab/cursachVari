@@ -1,0 +1,106 @@
+body{
+    overflow: hidden;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    background-color: rgb(255, 255, 255);
+    padding: 1.5em 2.5em;
+    border-radius: 10px;
+}
+.regForm-wrap{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.regForm{
+    display: flex;
+    justify-content: center;
+}
+p{
+    font-family: 'Poppins', sans-serif;
+    margin: 0px;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+.errors{
+    position: absolute;
+    right: 20px;
+    top: 2em;
+}
+.err{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    background-color: #ffc4c4;
+    padding: 10px;
+    border-radius: 5px;
+    user-select: none;
+}
+.err p{
+    font-size: 13px;
+    color: rgb(255, 0, 0);
+    margin: 0px;
+}
+.err i{
+    cursor: pointer;
+}
+input{
+    padding: .8em 1em;
+    outline: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 13px;
+    font-size: .8em;
+    transition: .3s;
+}
+
+
+input::placeholder{
+    color: #CCCCCC;
+}
+.btn{
+    background: #18ACCD;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 1em;
+    transition: .3s;
+    border: none;
+    border: 1px solid #18ACCD;
+    border-radius: 13px;
+    padding: .5em 1em;
+}
+.btn:hover {
+    background-color: #376699;
+    transition: .3s;
+}
+a{
+    margin: 0 auto;
+    margin-top: 1em;
+    color: #18ACCD;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-decoration: none;
+    transition: .3s;
+}
+a:hover{
+    color: #0F82FF;
+    transition: .3s;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.logo p{
+    color: #18ACCD;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 41px;
+    margin-bottom: 15px;
+}
