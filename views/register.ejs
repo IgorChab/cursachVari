@@ -9,20 +9,27 @@
 </head>
 <body>
     <div class="regForm-wrap">
+        <% if (validationErrors != undefined) { %>
+            <div class="errors">
+                <% validationErrors.errors.forEach(element => { %>
+                        <p><%= element.msg %></p>
+                <% }) %>
+            </div>
+        <% } %>
         <div class="regForm">
             <form action="/register" method="post">
                 <div class="logo">
                     <img src="img/Vector.svg">
                     <p>varietyx</p>
                 </div>
-                <input type="text" name="userName" placeholder="Имя" autocomplete="off"><br>
+                <input type="text" name="username" placeholder="Имя" autocomplete="off"><br>
                 
                 <input type="email" name="email" placeholder="Электронная почта" autocomplete="off"><br>
                 
                 <input type="password" name="password" placeholder="Пароль">
                     
                 <input type="submit" value="Зарегистрироваться" class="btn">
-                <a href="/login">Мне нужно войти</a>
+                <a href="/auth">Мне нужно войти</a>
             </form>
         </div>
     </div>

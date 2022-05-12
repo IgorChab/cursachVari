@@ -104,3 +104,9 @@ a:hover{
     line-height: 41px;
     margin-bottom: 15px;
 }
+.errors{
+    color: red;
+}
+.errors p{
+    margin-bottom: 10px;
+}
