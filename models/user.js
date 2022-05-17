@@ -10,6 +10,12 @@ const usersSchema = new mongoose.Schema({
 
     password: {
         type: String
+    },
+
+    sections: [],
+
+    profilePhoto: {
+        type: String
     }
 })
 

@@ -6,19 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>varietyx</title>
     <link rel="stylesheet" href="auth.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins&display=swap');
+    </style>
 </head>
 <body>
     <div class="regForm-wrap">
         <div class="regForm">
-            <form action="/register" method="post">
+            <form action="/auth" method="post">
                 <div class="logo">
                     <img src="img/Vector.svg">
                     <p>varietyx</p>
                 </div>
                 
-                <input type="email" name="email" placeholder="Электронная почта" autocomplete="off"><br>
+                <input type="email" name="email" placeholder="Электронная почта" autocomplete="off" class="input">
+                <% if (validationError != undefined) { %>
+                    <% validationError.errors.forEach(element => { %>
+                        <% if (element.param == 'email') { %>
+                            <p class="errors"><%= element.msg %></p>
+                        <% } %>
+                    <% }) %>
+                <% } %>
                 
                 <input type="password" name="password" placeholder="Пароль">
+                <% if (validationError != undefined) { %>
+                    <% validationError.errors.forEach(element => { %>
+                        <% if (element.param == 'password') { %>
+                            <p class="errors last-child"><%= element.msg %></p>
+                        <% } %>
+                    <% }) %>
+                <% } %>
                     
                 <input type="submit" value="Войти" class="btn">
                 <a href="/register">Зарегистрироваться</a>

@@ -4,6 +4,7 @@
     font-family: 'Inter', sans-serif;
 }
 body{
+    overflow: hidden;
     display: flex;
 }
 .aside{
@@ -40,6 +41,8 @@ body{
     display: flex;
     align-items: center;
     height: 100px;
+    text-decoration: none;
+    color: #fff;
 }
 .field:hover{
     background: #1590AB;
@@ -55,6 +58,7 @@ body{
 }
 .main{
     font-size: 24px;
+    width: 100%;
 }
 .currentField, .activeTasks{
     margin-left: 87px;
@@ -68,14 +72,13 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 118px;
-    height: 37px;
+    width: 30px;
+    height: 30px;
     background-color: #18ACCD;
     color: #fff;
-    border-radius: 30px;
+    border-radius: 50%;
     cursor: pointer;
-    position: absolute;
-    right: 0px;
+    margin-left: 20px;
 }
 .activeTasks{
     display: flex;
@@ -83,6 +86,10 @@ body{
     margin-top: 50px;
     position: relative;
     font-size: 16px;
+}
+.arrow{
+    font-size: 20px;
+    margin-left: 30px;
 }
 .task{
     display: flex;
@@ -94,6 +101,7 @@ body{
     border-radius: 20px;
     margin-top: 20px;
     font-size: 16px;
+    color: #18ACCD;
 }
 .taskDesc{
     border-right: 1px solid #000;
@@ -102,12 +110,14 @@ body{
     align-items: center;
     padding-left: 20px;
     padding-right: 100px;
-    color: #18ACCD;
+}
+.taskDesc input{
+    background-color: #fff;
 }
 .enterTask{
     outline: none;
     border: none;
-    width: 505px;
+    width: 563px;
     height: 35px;
     margin-left: 20px;
 }
@@ -122,4 +132,162 @@ body{
 .taskNumber{
     margin-right: 20px;
 }
+.settings{
+    font-size: 24px;
+    width: 100%;
+}
+.settingsSection{
+    font-size: 18px;
+    color: #18ACCD;
+    margin-bottom: 40px;
+    display: inline-block;
+}
+.second{
+    margin-left: 100px;
+}
+.settingsBlock{
+    border: 1px solid #000;
+    border-radius: 30px;
+    width: 300px;
+    display: inline-block;
+}
+.sb1{
+    margin-left: 87px;
+    height: 460px;
+}
+.sb2{
+    margin-left: 63px;
+    height: 460px;
+}
+#updateAvatar{
+    display: none;
+}
+.titleForm{
+    font-size: 16px;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+.firstBlock{
+    padding: 20px;
+}
+.secondBlock{
+    padding: 20px;
+}
+.firstBlock form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.secondBlock form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+input{
+    padding: 10px 5px;
+    outline: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 13px;
+    font-size: 12px;
+    width: 95%;
+}
 
+.firstBlock input, .secondBlock input{
+    padding: 10px 5px;
+    outline: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 13px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    width: 95%;
+}
+
+input::placeholder{
+    color: #CCCCCC;
+}
+.btn{
+    background: #18ACCD;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .3s;
+    border: none;
+    border: 1px solid #18ACCD;
+    border-radius: 13px;
+    padding: 10px 5px;
+}
+.btn:hover {
+    background-color: #376699;
+    transition: .3s;
+}
+.uploadAvatar{
+    display: flex;
+    height: 144.8px;
+    border: 1px solid #000;
+    border-radius: 30px;
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: center;
+    font-size: 14px;
+    gap: 40px;
+}
+.uploadAvatar i{
+    margin-left: 30px;
+    font-size: 50px;
+    justify-content: flex-start;
+}
+.titleSection{
+    margin-left: 87px;
+}
+.taskWrapper{
+    height: 550px;
+    overflow-y: scroll;
+    margin-top: 20px;
+}
+.taskCategory{
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+    color: #18ACCD;
+}
+.taskCategory div{
+    display: flex;
+    cursor: pointer;
+}
+.taskCategory div{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+.active{
+    color: #083A45;
+}
+.deadline{
+    margin-left: 20px;
+    cursor: pointer;
+    border: none;
+    background-color: none;
+}
+.doneTask{
+    color: #fff;
+    background-color: #18ACCD;
+    border: 1px solid #1590AB;
+}
+.done{
+    border-right: 1px solid #fff;
+}
+.taskDone input{
+    background-color: #18ACCD;
+    color: #fff;
+}
+.taskDone input::placeholder{
+    color: #fff;
+}
+.done input{
+    background-color: #18ACCD;
+    color: #fff;
+}
+.radioDone{
+    border: 1px solid #fff;
+    background-color: #fff;
+}

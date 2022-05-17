@@ -6,28 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>varietyx</title>
     <link rel="stylesheet" href="register.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins&display=swap');
+    </style>
 </head>
 <body>
     <div class="regForm-wrap">
-        <% if (validationErrors != undefined) { %>
-            <div class="errors">
-                <% validationErrors.errors.forEach(element => { %>
-                        <p><%= element.msg %></p>
-                <% }) %>
-            </div>
-        <% } %>
         <div class="regForm">
             <form action="/register" method="post">
                 <div class="logo">
                     <img src="img/Vector.svg">
                     <p>varietyx</p>
                 </div>
-                <input type="text" name="username" placeholder="Имя" autocomplete="off"><br>
-                
-                <input type="email" name="email" placeholder="Электронная почта" autocomplete="off"><br>
-                
+                <input type="text" name="username" placeholder="Имя" autocomplete="off" class="input">
+                <% if (validationErrors != undefined) { %>
+                    <% validationErrors.errors.forEach(element => { %>
+                        <% if (element.param == 'username') { %>
+                            <p class="errors"><%= element.msg %></p>
+                        <% } %>
+                    <% }) %>
+                <% } %>
+                <input type="email" name="email" placeholder="Электронная почта" autocomplete="off" class="input">
+                <% if (validationErrors != undefined) { %>
+                    <% validationErrors.errors.forEach(element => { %>
+                        <% if (element.param == 'email') { %>
+                            <p class="errors"><%= element.msg %></p>
+                        <% } %>
+                    <% }) %>
+                <% } %>
                 <input type="password" name="password" placeholder="Пароль">
-                    
+                <% if (validationErrors != undefined) { %>
+                    <% validationErrors.errors.forEach(element => { %>
+                        <% if (element.param == 'password') { %>
+                            <p class="errors last-child"><%= element.msg %></p>
+                        <% } %>
+                    <% }) %>
+                <% } %>
                 <input type="submit" value="Зарегистрироваться" class="btn">
                 <a href="/auth">Мне нужно войти</a>
             </form>

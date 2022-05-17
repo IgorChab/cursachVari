@@ -17,19 +17,59 @@
             <div class="logo">
                 <img src="img/Vector.svg">
             </div>
-            <div class="currentUser">Варвара</div>
+            <div class="currentUser"><%= username %></div>
         </div>
         
-        <div class="field"><p class="fieldItem">Дом</p></div>
-        <div class="field"><p class="fieldItem">Учеба</p></div>
-        <div class="field"><p class="fieldItem">Работа</p></div>
-        <div class="field"><p class="fieldItem">Настройки</p></div>
+        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= sections[0] %></p></a>
+        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= sections[1] %></p></a>
+        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= sections[2] %></p></a>
+
+        <a href = "/app/settings" class="field"><p class="fieldItem">Настройки</p></a>
     </div>
 
     <div class="settings">
         <div class="currentField">Настройки</div>
+        <div class="titleSection">
+            <div class="settingsSection first">Управление учетной записью</div>
+            <div class="settingsSection second">Профиль</div>
+        </div>
         
-
+        <div class="settingsBlock sb1">
+            <div class="firstBlock">
+                <p class="titleForm">Изменение пароля</p>
+                <form action="" method="post">
+                    <input type="password" placeholder="Старый пароль">
+                    <input type="password" placeholder="Новый пароль">
+                    <input type="password" placeholder="Проверка пароля">
+                    <input type="submit" value="Сменить пароль" class="btn">
+                </form>
+                <p class="titleForm">Изменение адреса электронной почты</p>
+                <form action="" method="post">
+                    <input type="email" placeholder="Старый адрес">
+                    <input type="email" placeholder="Новый адрес">
+                    <input type="submit" value="Сменить адрес электронной почты" class="btn">
+                </form>
+            </div>
+        </div>
+        <div class="settingsBlock sb2">
+            <div class="secondBlock">
+                <p class="titleForm">Изменение аватара</p>
+                <form action="" method="post">
+                    <label for="updateAvatar" class="uploadAvatar">
+                        <i class="fa-solid fa-plus"></i>
+                        <p>Добавить файл</p>
+                    </label>
+                    <input type="file" placeholder="Старый пароль" id="updateAvatar">
+                    <input type="submit" value="Сменить аватар профиля" class="btn">
+                </form>
+                <p class="titleForm">Изменить имя пользователя</p>
+                <form action="" method="post">
+                    <input type="email" placeholder="Ваше имя">
+                    <input type="email" placeholder="Новое имя">
+                    <input type="submit" value="Изменить имя пользователя" class="btn">
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>

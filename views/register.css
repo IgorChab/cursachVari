@@ -1,5 +1,6 @@
 body{
     overflow: hidden;
+    font-family: 'inter', sans-serif;
 }
 form{
     display: flex;
@@ -20,33 +21,19 @@ form{
     justify-content: center;
 }
 p{
-    font-family: 'Poppins', sans-serif;
     margin: 0px;
     margin-bottom: 5px;
     font-size: 24px;
 }
 .errors{
-    position: absolute;
-    right: 20px;
-    top: 2em;
+    color: red;
+    font-size: 11px;
+    margin-top: -15px;
 }
-.err{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    background-color: #ffc4c4;
-    padding: 10px;
-    border-radius: 5px;
-    user-select: none;
-}
-.err p{
-    font-size: 13px;
-    color: rgb(255, 0, 0);
-    margin: 0px;
-}
-.err i{
-    cursor: pointer;
+.last-child{
+    color: red;
+    font-size: 11px;
+    margin-top: 0px;
 }
 input{
     padding: .8em 1em;
@@ -56,7 +43,6 @@ input{
     font-size: .8em;
     transition: .3s;
 }
-
 
 input::placeholder{
     color: #CCCCCC;
@@ -104,9 +90,6 @@ a:hover{
     line-height: 41px;
     margin-bottom: 15px;
 }
-.errors{
-    color: red;
-}
-.errors p{
-    margin-bottom: 10px;
+.input{
+    margin-bottom: 15px;
 }
