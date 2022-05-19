@@ -9,7 +9,7 @@ body{
     grid-template-columns: 310px 1fr;
 }
 .aside{
-    width: 350px;
+    width: 100%;
     background: #18ACCD;
     border-radius: 0px 30px 30px 0px;
     height: 100vh;
