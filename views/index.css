@@ -6,7 +6,7 @@
 body{
     overflow: hidden;
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 310px 1fr;
 }
 .aside{
     width: 350px;
