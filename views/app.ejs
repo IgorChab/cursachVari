@@ -11,24 +11,36 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
-        let firstSection = '<%= sections[0] %>';
-        let secondSection = '<%= sections[1] %>';
-        let thirdSection = '<%= sections[2] %>';
+        let firstSection = '<%= firstSection %>';
+        let secondSection = '<%= secondSection%>';
+        let thirdSection = '<%= thirdSection %>';
     </script>
     <script defer src="script.js"></script>
 </head>
 <body>
     <div class="aside">
         <div class="logoWrapper">
-            <div class="logo">
-                <img src="img/Vector.svg">
-            </div>
+            <% if (photo) { %>
+                <img src=<%= photo %> class="profilePhoto">
+            <% } else { %>
+                <div class="logo">
+                    <img src="img/Vector.svg">
+                </div>
+            <% } %>
             <div class="currentUser"><%= username %></div>
         </div>
         
-        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= sections[0] %></p></a>
-        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= sections[1] %></p></a>
-        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= sections[2] %></p></a>
+        <a href = "/app/firstSection" class="field">
+            <p class="fieldItem"><%= firstSection %></p>
+        </a>
+
+        <a href = "/app/secondSection" class="field">
+            <p class="fieldItem"><%= secondSection %></p>
+        </a>
+
+        <a href = "/app/thirdSection" class="field">
+            <p class="fieldItem"><%= thirdSection %></p>
+        </a>
 
         <a href = "/app/settings" class="field"><p class="fieldItem">Настройки</p></a>
     </div>
@@ -36,72 +48,22 @@
         <div class="currentField"></div>
         <div class="taskCategory">
             <div class="category active" onclick="choiceCategory(event)">
-                <p>Активные задачи</p>
+                <p class="taskStatus">Активные задачи</p>
                 <i class="fa-solid fa-angle-down arrow"></i>
                 <div class="addTask" onclick="addTask(event)">
                     <i class="fa-solid fa-plus"></i>
                 </div>
             </div>
             <div class="category" onclick="choiceCategory(event)">
-                <p>Предстоящие задачи</p>
+                <p class="taskStatus">Предстоящие задачи</p>
                 <i class="fa-solid fa-angle-down arrow"></i>
             </div>
             <div class="category" onclick="choiceCategory(event)">
-                <p>Завершенные задачи</p>
+                <p class="taskStatus">Завершенные задачи</p>
                 <i class="fa-solid fa-angle-down arrow"></i>
             </div>
         </div>
         <div class="taskWrapper"></div>
-        <!-- <div class="activeTasks">
-            <div class="addTask" onclick="addTask(event)">
-                <i class="fa-solid fa-plus"></i>
-            </div>
-        </div> -->
-        <!-- <div class="taskWrapper"></div> -->
-        <!-- <div class="task">
-            <div class="taskDesc">
-                <p class="taskNumber">Задача 1</p>
-                <p class="deadline">Дедлайн: 01.01.2002</p>
-            </div>
-            <div class="taskText">
-                <input type="text" class="enterTask" placeholder="Запишите задачу">
-            </div>
-            <div class="radio"></div>
-        </div> -->
-        <!-- <div class="activeTasks">
-            <div class="addTask" onclick="addTask(event)">
-                <i class="fa-solid fa-plus"></i>
-            </div>
-        </div>
-        <div class="taskWrapper"></div> -->
-        <!-- <div class="task">
-            <div class="taskDesc">
-                <p class="taskNumber">Задача 1</p>
-                <p class="deadline">Дедлайн: 01.01.2002</p>
-            </div>
-            <div class="taskText">
-                <input type="text" class="enterTask" placeholder="Запишите задачу">
-            </div>
-            <div class="radio"></div>
-        </div> -->
-        <!-- <div class="activeTasks"> -->
-            <!-- <p>Завершенные задачи</p>
-            <i class="fa-solid fa-angle-down arrow"></i> -->
-            <!-- <div class="addTask" onclick="addTask(event)">
-                <i class="fa-solid fa-plus"></i>
-            </div>
-        </div>
-        <div class="taskWrapper"></div> -->
-        <!-- <div class="task">
-            <div class="taskDesc">
-                <p class="taskNumber">Задача 1</p>
-                <p class="deadline">Дедлайн: 01.01.2002</p>
-            </div>
-            <div class="taskText">
-                <input type="text" class="enterTask" placeholder="Запишите задачу">
-            </div>
-            <div class="radio"></div>
-        </div> -->
     </div>
 </body>
 </html>

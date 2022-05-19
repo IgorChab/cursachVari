@@ -43,6 +43,11 @@ body{
     height: 100px;
     text-decoration: none;
     color: #fff;
+    position: relative;
+    border: none;
+    border-radius: 0;
+    font-size: 23px;
+    background-color: #18ACCD;
 }
 .field:hover{
     background: #1590AB;
@@ -96,12 +101,12 @@ body{
     width: 1027px;
     height: 60px;
     border: 1px solid #000;
-    margin-left: 87px;
     align-items: center;
     border-radius: 20px;
     margin-top: 20px;
     font-size: 16px;
     color: #18ACCD;
+    position: relative;
 }
 .taskDesc{
     border-right: 1px solid #000;
@@ -126,8 +131,9 @@ body{
     height: 20px;
     border-radius: 50%;
     border: 1px solid #000;
-    margin-left: 80px;
+    margin-left: 20px;
     cursor: pointer;
+    margin-right: 40px;
 }
 .taskNumber{
     margin-right: 20px;
@@ -139,8 +145,8 @@ body{
 .settingsSection{
     font-size: 18px;
     color: #18ACCD;
-    margin-bottom: 40px;
-    display: inline-block;
+    position: absolute;
+    top: -40px;
 }
 .second{
     margin-left: 100px;
@@ -150,9 +156,9 @@ body{
     border-radius: 30px;
     width: 300px;
     display: inline-block;
+    position: relative;
 }
 .sb1{
-    margin-left: 87px;
     height: 460px;
 }
 .sb2{
@@ -198,7 +204,7 @@ input{
     border: 1px solid #CCCCCC;
     border-radius: 13px;
     font-size: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     width: 95%;
 }
 
@@ -221,6 +227,7 @@ input::placeholder{
     transition: .3s;
 }
 .uploadAvatar{
+    position: relative;
     display: flex;
     height: 144.8px;
     border: 1px solid #000;
@@ -240,15 +247,20 @@ input::placeholder{
     margin-left: 87px;
 }
 .taskWrapper{
-    height: 550px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
     overflow-y: scroll;
     margin-top: 20px;
 }
 .taskCategory{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     font-size: 16px;
     color: #18ACCD;
+    gap: 100px;
+    height: 30px;
 }
 .taskCategory div{
     display: flex;
@@ -290,4 +302,66 @@ input::placeholder{
 .radioDone{
     border: 1px solid #fff;
     background-color: #fff;
+}
+.avatar{
+    display: none;
+    width: 100%;
+    border-radius: 30px;
+    position: absolute;
+    z-index: -1;
+    object-fit: cover;
+}
+.profilePhoto{
+    width: 74px;
+    height: 74px;
+    background-color: #083A45;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.wrapBlocks{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+.sett{
+    margin: 0px;
+    display: inline-block;
+    position: absolute;
+    left: 87px;
+}
+.field i {
+    display: none;
+    position: absolute;
+    right: 20px;
+}
+.field:hover i {
+    z-index: 1000;
+    display: block;
+    position: absolute;
+    right: 20px;
+}
+.editSections{
+    color: #18ACCD;
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    right: 87px;
+}
+.editSections:hover{
+    color: #083A45;
+}
+.groupSett{
+    display: flex;
+    align-items: center;
+    margin-top: 55px;
+    margin-bottom: 100px;
+    position: relative;
+}
+.trash{
+    cursor: pointer;
+}
+.completedTrash{
+    position: absolute;
+    right: 40px;
 }

@@ -46,10 +46,6 @@ input{
 .input{
     margin-bottom: 15px;
 }
-input:focus {
-    border-bottom: 1px solid #0F82FF;
-    transition: .3s;
-}
 input::placeholder{
     color: #CCCCCC;
 }

@@ -10,64 +10,74 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins&display=swap');
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="script.js"></script>
 </head>
 <body>
     <div class="aside">
         <div class="logoWrapper">
-            <div class="logo">
-                <img src="img/Vector.svg">
-            </div>
+            <% if (photo) { %>
+                <img src=<%= photo %> class="profilePhoto">
+            <% } else { %>
+                <div class="logo">
+                    <img src="img/Vector.svg">
+                </div>
+            <% } %>
             <div class="currentUser"><%= username %></div>
         </div>
         
-        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= sections[0] %></p></a>
-        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= sections[1] %></p></a>
-        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= sections[2] %></p></a>
+        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= firstSection %></p></a>
+        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= secondSection %></p></a>
+        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= thirdSection %></p></a>
 
         <a href = "/app/settings" class="field"><p class="fieldItem">Настройки</p></a>
     </div>
 
     <div class="settings">
-        <div class="currentField">Настройки</div>
-        <div class="titleSection">
-            <div class="settingsSection first">Управление учетной записью</div>
-            <div class="settingsSection second">Профиль</div>
+        <div class="groupSett">
+            <div class="currentField sett">Настройки</div>
         </div>
-        
-        <div class="settingsBlock sb1">
-            <div class="firstBlock">
-                <p class="titleForm">Изменение пароля</p>
-                <form action="" method="post">
-                    <input type="password" placeholder="Старый пароль">
-                    <input type="password" placeholder="Новый пароль">
-                    <input type="password" placeholder="Проверка пароля">
-                    <input type="submit" value="Сменить пароль" class="btn">
-                </form>
-                <p class="titleForm">Изменение адреса электронной почты</p>
-                <form action="" method="post">
-                    <input type="email" placeholder="Старый адрес">
-                    <input type="email" placeholder="Новый адрес">
-                    <input type="submit" value="Сменить адрес электронной почты" class="btn">
-                </form>
+        <div class="wrapBlocks">
+            <div class="settingsBlock sb1">
+                <div class="settingsSection">Управление учетной записью</div>
+                <div class="firstBlock">
+                    <p class="titleForm">Изменение пароля</p>
+                    <form action="/updatePass" method="post" id="updatePass">
+                        <input type="password" placeholder="Старый пароль" class="inputUpdatePass oldPass">
+                        <input type="password" placeholder="Новый пароль" class="inputUpdatePass newPass">
+                        <input type="submit" value="Сменить пароль" class="btn">
+                    </form>
+                    <p class="titleForm">Изменение адреса электронной почты</p>
+                    <form action="/updateEmail" method="post" id="updateEmail">
+                        <input type="email" placeholder="Старый адрес" class="oldEmail">
+                        <input type="email" placeholder="Новый адрес" class="newEmail">
+                        <input type="submit" value="Сменить адрес электронной почты" class="btn">
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="settingsBlock sb2">
-            <div class="secondBlock">
-                <p class="titleForm">Изменение аватара</p>
-                <form action="" method="post">
-                    <label for="updateAvatar" class="uploadAvatar">
-                        <i class="fa-solid fa-plus"></i>
-                        <p>Добавить файл</p>
-                    </label>
-                    <input type="file" placeholder="Старый пароль" id="updateAvatar">
-                    <input type="submit" value="Сменить аватар профиля" class="btn">
-                </form>
-                <p class="titleForm">Изменить имя пользователя</p>
-                <form action="" method="post">
-                    <input type="email" placeholder="Ваше имя">
-                    <input type="email" placeholder="Новое имя">
-                    <input type="submit" value="Изменить имя пользователя" class="btn">
-                </form>
+            <div class="settingsBlock sb2">
+                <div class="settingsSection">Профиль</div>
+                <div class="secondBlock">
+                    <p class="titleForm">Изменение аватара</p>
+                    <form action="/updateAvatar" method="post" id="updatePhoto">
+                        <label for="updateAvatar" class="uploadAvatar">
+                            <i class="fa-solid fa-plus"></i>
+                            <p>Добавить файл</p>
+                            <% if (photo) { %>
+                                <img src=<%= photo %> class="avatar" style="display: block">
+                            <% } else {%>
+                                <img src="" class="avatar">
+                            <% } %>
+                        </label>
+                        <input type="file" id="updateAvatar" onchange="updateImage(event)">
+                        <input type="submit" value="Сменить аватар профиля" class="btn">
+                    </form>
+                    <p class="titleForm">Изменить имя пользователя</p>
+                    <form action="/updateUsername" method="post" id="updateUsername">
+                        <input type="text" placeholder="Ваше имя" class="oldName">
+                        <input type="text" placeholder="Новое имя" class="newName">
+                        <input type="submit" value="Изменить имя пользователя" class="btn">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
