@@ -1,13 +1,13 @@
 let urlPath = location.pathname;
 let currentField = document.querySelector('.currentField');
 if (urlPath == "/app/firstSection/") {
-    currentField.innerText = firstSection;
+    currentField.innerText = 'Дом';
     defaultUploadActiveTasks()
 } else if (urlPath == "/app/secondSection/"){
-    currentField.innerText = secondSection;
+    currentField.innerText = 'Работа';
     defaultUploadActiveTasks()
 } else if (urlPath == "/app/thirdSection/") {
-    currentField.innerText = thirdSection;
+    currentField.innerText = 'Учеба';
     defaultUploadActiveTasks()
 }
 
