@@ -268,8 +268,8 @@ app.post('/enterTask', (req, res) => {
 
         }
         req.session.firstSection = user.sections.firstSection.sectionName;
-        req.session.secondSection = user.sections.firstSection.sectionName;
-        req.session.thirdSection = user.sections.firstSection.sectionName;
+        req.session.secondSection = user.sections.secondSection.sectionName;
+        req.session.thirdSection = user.sections.thirdSection.sectionName;
         req.session.save();
     })
 })

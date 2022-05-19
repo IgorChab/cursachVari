@@ -11,9 +11,9 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
-        let firstSection = '<%= sections.firstSection.sectionName %>';
-        let secondSection = '<%= sections.secondSection.sectionName %>';
-        let thirdSection = '<%= sections.thirdSection.sectionName %>';
+        let firstSection = '<%= firstSection %>';
+        let secondSection = '<%= secondSection %>';
+        let thirdSection = '<%= thirdSection %>';
     </script>
     <script defer src="script.js"></script>
 </head>
@@ -30,9 +30,9 @@
             <div class="currentUser"><%= username %></div>
         </div>
         
-        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= sections.firstSection.sectionName %></p></a>
-        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= sections.secondSection.sectionName %></p></a>
-        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= sections.thirdSection.sectionName %></p></a>
+        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= firstSection %></p></a>
+        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= secondSection %></p></a>
+        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= thirdSection %></p></a>
         <a href = "/app/settings" class="field"><p class="fieldItem">Настройки</p></a>
     </div>
 
