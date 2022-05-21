@@ -50,9 +50,6 @@
             <div class="category active" onclick="choiceCategory(event)">
                 <p class="taskStatus">Активные задачи</p>
                 <i class="fa-solid fa-angle-down arrow"></i>
-                <div class="addTask" onclick="addTask(event)">
-                    <i class="fa-solid fa-plus"></i>
-                </div>
             </div>
             <div class="category" onclick="choiceCategory(event)">
                 <p class="taskStatus">Предстоящие задачи</p>
@@ -62,6 +59,9 @@
                 <p class="taskStatus">Завершенные задачи</p>
                 <i class="fa-solid fa-angle-down arrow"></i>
             </div>
+        </div>
+        <div class="addToTop" onclick="addTask(event)">
+            <p>+ Добавить задачу</p>
         </div>
         <div class="taskWrapper"></div>
     </div>

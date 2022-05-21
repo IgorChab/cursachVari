@@ -9,6 +9,8 @@ const { check, validationResult } = require('express-validator');
 const MongoStore = require('connect-mongo');
 const session = require('express-session')
 const authMiddleware = require('./middleware/authMiddleware');
+const sessionMiddleware = require('./middleware/sessionMiddleware');
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('views'));
@@ -52,12 +54,12 @@ app.use(
 app.get('/', (req, res) => {
     res.redirect('register')
 })
-app.get('/register', (req, res) => {
+app.get('/register', sessionMiddleware, (req, res) => {
     res.render('register', {
         validationErrors: undefined
     })
 })
-app.get('/auth', (req, res) => {
+app.get('/auth', sessionMiddleware, (req, res) => {
     res.render('auth', {
         validationError: undefined
     })
@@ -126,7 +128,7 @@ app.post('/register', [
                 sectionName: "Дом",
                 activeTask: [],
                 uncomingTask: [],
-                completedTask: []
+                completedTask: [],
             },
             secondSection: {
                 sectionName: "Работа",
@@ -189,7 +191,7 @@ app.post('/enterTask', (req, res) => {
                     user.sections.firstSection.activeTask.push({
                         taskNumber: req.body.taskNumber, 
                         taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
+                        taskValue: req.body.taskValue,
                     })
                     user.save()
                 }
@@ -197,15 +199,7 @@ app.post('/enterTask', (req, res) => {
                     user.sections.firstSection.uncomingTask.push({
                         taskNumber: req.body.taskNumber, 
                         taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
-                    })
-                    user.save()
-                }
-                if (req.body.activeCategory == 'Завершенные задачи') {
-                    user.sections.firstSection.completedTask.push({
-                        taskNumber: req.body.taskNumber, 
-                        taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
+                        taskValue: req.body.taskValue,
                     })
                     user.save()
                 }
@@ -216,7 +210,7 @@ app.post('/enterTask', (req, res) => {
                     user.sections.secondSection.activeTask.push({
                         taskNumber: req.body.taskNumber, 
                         taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
+                        taskValue: req.body.taskValue,
                     })
                     user.save()
                 }
@@ -224,18 +218,11 @@ app.post('/enterTask', (req, res) => {
                     user.sections.secondSection.uncomingTask.push({
                         taskNumber: req.body.taskNumber, 
                         taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
+                        taskValue: req.body.taskValue,
                     })
                     user.save()
                 }
-                if (req.body.activeCategory == 'Завершенные задачи') {
-                    user.sections.secondSection.completedTask.push({
-                        taskNumber: req.body.taskNumber, 
-                        taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
-                    })
-                    user.save()
-                }
+            
                 break;
 
             case 'Учеба':
@@ -244,7 +231,7 @@ app.post('/enterTask', (req, res) => {
                     user.sections.thirdSection.activeTask.push({
                         taskNumber: req.body.taskNumber, 
                         taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
+                        taskValue: req.body.taskValue,
                     })
                     user.save()
                 }
@@ -252,25 +239,14 @@ app.post('/enterTask', (req, res) => {
                     user.sections.thirdSection.uncomingTask.push({
                         taskNumber: req.body.taskNumber, 
                         taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
+                        taskValue: req.body.taskValue,
                     })
                     user.save()
                 }
-                if (req.body.activeCategory == 'Завершенные задачи') {
-                    user.sections.thirdSection.completedTask.push({
-                        taskNumber: req.body.taskNumber, 
-                        taskDeadline: req.body.taskDeadline, 
-                        taskValue: req.body.taskValue
-                    })
-                    user.save()
-                }
+                
                 break;
 
         }
-        req.session.firstSection = user.sections.firstSection.sectionName;
-        req.session.secondSection = user.sections.secondSection.sectionName;
-        req.session.thirdSection = user.sections.thirdSection.sectionName;
-        req.session.save();
     })
 })
 
@@ -444,27 +420,81 @@ app.post('/deleteTask', (req, res) => {
 
 app.post('/pushToCompleted', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
-        if(req.body.sectionName == 'Дом'){
+        if(req.body.sectionName == 'Дом' && req.body.activeCategory == 'Активные задачи'){
             user.sections.firstSection.completedTask.push({
                 taskNumber: req.body.taskNumber,
                 taskDeadline: req.body.taskDeadline, 
                 taskValue: req.body.taskValue
             })
+            user.sections.firstSection.activeTask.forEach(el => {
+                if (el.taskNumber == req.body.taskNumber) {
+                    el.remove();
+                }
+            })
             user.save();
         }
-        if(req.body.sectionName == 'Работа'){
+        if(req.body.sectionName == 'Дом' && req.body.activeCategory == 'Предстоящие задачи'){
+            user.sections.firstSection.completedTask.push({
+                taskNumber: req.body.taskNumber,
+                taskDeadline: req.body.taskDeadline, 
+                taskValue: req.body.taskValue
+            })
+            user.sections.firstSection.uncomingTask.forEach(el => {
+                if (el.taskNumber == req.body.taskNumber) {
+                    el.remove();
+                }
+            })
+            user.save();
+        }
+        if(req.body.sectionName == 'Работа' && req.body.activeCategory == 'Активные задачи'){
             user.sections.secondSection.completedTask.push({
                 taskNumber: req.body.taskNumber,
                 taskDeadline: req.body.taskDeadline, 
                 taskValue: req.body.taskValue
             })
+            user.sections.secondSection.activeTask.forEach(el => {
+                if (el.taskNumber == req.body.taskNumber) {
+                    el.remove();
+                }
+            })
             user.save();
         }
-        if(req.body.sectionName == 'Учеба'){
+        if(req.body.sectionName == 'Работа' && req.body.activeCategory == 'Предстоящие задачи'){
+            user.sections.secondSection.completedTask.push({
+                taskNumber: req.body.taskNumber,
+                taskDeadline: req.body.taskDeadline, 
+                taskValue: req.body.taskValue
+            })
+            user.sections.secondSection.uncomingTask.forEach(el => {
+                if (el.taskNumber == req.body.taskNumber) {
+                    el.remove();
+                }
+            })
+            user.save();
+        }
+        if(req.body.sectionName == 'Учеба' && req.body.activeCategory == 'Активные задачи'){
             user.sections.thirdSection.completedTask.push({
                 taskNumber: req.body.taskNumber,
                 taskDeadline: req.body.taskDeadline,
                 taskValue: req.body.taskValue
+            })
+            user.sections.thirdSection.activeTask.forEach(el => {
+                if (el.taskNumber == req.body.taskNumber) {
+                    el.remove();
+                }
+            })
+            user.save();
+        }
+        if(req.body.sectionName == 'Учеба' && req.body.activeCategory == 'Предстоящие задачи'){
+            user.sections.thirdSection.completedTask.push({
+                taskNumber: req.body.taskNumber,
+                taskDeadline: req.body.taskDeadline,
+                taskValue: req.body.taskValue
+            })
+            user.sections.thirdSection.uncomingTask.forEach(el => {
+                if (el.taskNumber == req.body.taskNumber) {
+                    el.remove();
+                }
             })
             user.save();
         }

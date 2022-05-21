@@ -17,52 +17,23 @@ function defaultUploadActiveTasks(){
         body: JSON.stringify({currentSection: currentSection})
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
-            let div = document.createElement('div');
+            var div = document.createElement('div');
             div.classList.add('task');
             let html = `
                 <div class="taskDesc">
                     <p class="taskNumber">№${el.taskNumber}</p>
-                    <input type="date" class="deadline" value="${el.taskDeadline}">
+                    <p class="deadline">Дедлайн: ${el.taskDeadline}</p>
                 </div>
                 <div class="taskText">
-                    <input type="text" class="enterTask" placeholder="Запишите задачу" onchange="enterTask(event)" value="${el.taskValue}">
+                    <p class="enterTask">${el.taskValue}</p>
                 </div>
                 <div class="radio" onclick="doneTask(event)"></div>
                 <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
             `;
-            div.innerHTML = html
-            document.querySelector('.taskWrapper').appendChild(div)
+            div.innerHTML = html;
+            document.querySelector('.taskWrapper').appendChild(div);
         })
     })
-}
-
-
-var counterTask = 0;
-function addTask(event) {
-    let lastElem = document.querySelector('.taskWrapper').lastElementChild;
-    if(lastElem){
-        let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
-        counterTask = taskNumber;
-    } else {
-        counterTask = 0;
-    }
-    counterTask++;
-    let elem = event.currentTarget;
-    let div = document.createElement('div');
-    div.classList.add('task');
-    let html = `
-        <div class="taskDesc">
-            <p class="taskNumber">№${counterTask}</p>
-            <input type="date" class="deadline">
-        </div>
-        <div class="taskText">
-            <input type="text" class="enterTask" placeholder="Запишите задачу" onchange="enterTask(event)">
-        </div>
-        <div class="radio" onclick="doneTask(event)"></div>
-        <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
-    `;
-    div.innerHTML = html
-    elem.parentNode.parentNode.nextElementSibling.appendChild(div)
 }
 
 function choiceCategory(event){
@@ -70,27 +41,29 @@ function choiceCategory(event){
     if (currentElem.getAttribute('class') != 'category active') {
         document.querySelectorAll('.category').forEach(el => {
             el.classList.remove('active');
-            if (el.querySelector('.addTask')) {
-                el.querySelector('.addTask').remove()
-            }
         })
         currentElem.classList.add('active');
-        if(currentElem.querySelector('.taskStatus').textContent != 'Завершенные задачи'){
-            currentElem.insertAdjacentHTML("beforeend", 
-            `
-            <div class="addTask" onclick="addTask(event)">
-                <i class="fa-solid fa-plus"></i>
-            </div>
-            `)
-        }
+        document.querySelector('.addToTop').outerHTML = '<div class="addToTop" onclick="addTask(event)"><p>+ Добавить задачу</p></div>';
         if(currentElem.querySelector('.taskStatus').textContent == 'Активные задачи'){
             uploadActiveTasks()
+            document.querySelector('.addToTop').style.display = 'flex';
+            document.querySelector('.addToTop').classList.remove('newaddToTop');
+            if(document.querySelector('.wrapaddTask'))
+                document.querySelector('.wrapaddTask').remove();
         }
         if(currentElem.querySelector('.taskStatus').textContent == 'Предстоящие задачи'){
             uploadUncomingTasks()
+            document.querySelector('.addToTop').style.display = 'flex';
+            document.querySelector('.addToTop').classList.remove('newaddToTop');
+            if(document.querySelector('.wrapaddTask'))
+                document.querySelector('.wrapaddTask').remove();
         }
         if(currentElem.querySelector('.taskStatus').textContent == 'Завершенные задачи'){
             uploadCompletedTasks()
+            document.querySelector('.addToTop').style.display = 'none';
+            document.querySelector('.addToTop').classList.remove('newaddToTop');
+            if(document.querySelector('.wrapaddTask'))
+                document.querySelector('.wrapaddTask').remove();
         }
         counterTask = 0;
         if(document.querySelectorAll('.task')){
@@ -101,58 +74,44 @@ function choiceCategory(event){
     }
 }
 
-function enterTask(event){
-    let Category = document.querySelector('.active');
-    let activeCategory = Category.querySelector('.taskStatus').textContent;
-    let sectionName = document.querySelector('.currentField').textContent;
-    let taskNumber = event.currentTarget.parentNode.parentNode.querySelector('.taskNumber').textContent[1];
-    let taskDeadline = event.currentTarget.parentNode.parentNode.querySelector('.deadline').value
-    fetch('/enterTask', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            taskValue: event.currentTarget.value,
-            sectionName: sectionName,
-            activeCategory: activeCategory,
-            taskNumber: taskNumber,
-            taskDeadline: taskDeadline
-        })
-    })
-}
-
-
 function doneTask(event){
     if (event.currentTarget.getAttribute('class') != "radio radioDone") {
         event.currentTarget.parentNode.classList.add('doneTask');
         event.currentTarget.parentNode.querySelector('.taskDesc').classList.add('done');
         event.currentTarget.previousElementSibling.classList.add('taskDone');
-        event.currentTarget.classList.add('radioDone')
-        let task = event.currentTarget.parentNode;
+        event.currentTarget.classList.add('radioDone');
+        event.currentTarget.innerHTML = '<i class="fa-solid fa-check"></i>';
+        var task = event.currentTarget.parentNode;
         let sectionName = document.querySelector('.currentField').textContent;
         let taskNumber = task.querySelector('.taskNumber').textContent[1];
-        let taskDeadline = task.querySelector('.deadline').value;
-        let taskValue = task.querySelector('.enterTask').value;
+        let taskDeadline = task.querySelector('.deadline').textContent;
+        let taskValue = task.querySelector('.enterTask').textContent;
+        let Category = document.querySelector('.active');
+        let activeCategory = Category.querySelector('.taskStatus').textContent;
         fetch('/pushToCompleted', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                taskValue: event.currentTarget.value,
                 sectionName: sectionName,
                 taskNumber: taskNumber,
                 taskDeadline: taskDeadline,
-                taskValue: taskValue
+                taskValue: taskValue,
+                activeCategory: activeCategory
             })
         })
-    } else {
-        event.currentTarget.parentNode.classList.remove('doneTask');
-        event.currentTarget.parentNode.querySelector('.taskDesc').classList.remove('done');
-        event.currentTarget.previousElementSibling.classList.remove('taskDone');
-        event.currentTarget.classList.remove('radioDone')
+        setTimeout(() => {
+            task.remove();
+        }, 500);
     }
+
+    // } else {
+    //     event.currentTarget.parentNode.classList.remove('doneTask');
+    //     event.currentTarget.parentNode.querySelector('.taskDesc').classList.remove('done');
+    //     event.currentTarget.previousElementSibling.classList.remove('taskDone');
+    //     event.currentTarget.classList.remove('radioDone')
+    // }
 }
 
 //изменение пароля
@@ -311,18 +270,18 @@ function uploadActiveTasks(){
             let div = document.createElement('div');
             div.classList.add('task');
             let html = `
-                <div class="taskDesc">
-                    <p class="taskNumber">№${el.taskNumber}</p>
-                    <input type="date" class="deadline" value="${el.taskDeadline}">
-                </div>
-                <div class="taskText">
-                    <input type="text" class="enterTask" placeholder="Запишите задачу" onchange="enterTask(event)" value="${el.taskValue}">
-                </div>
-                <div class="radio" onclick="doneTask(event)"></div>
-                <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
+            <div class="taskDesc">
+                <p class="taskNumber">№${el.taskNumber}</p>
+                <p class="deadline">Дедлайн: ${el.taskDeadline}</p>
+            </div>
+            <div class="taskText">
+                <p class="enterTask">${el.taskValue}</p>
+            </div>
+            <div class="radio" onclick="doneTask(event)"></div>
+            <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
             `;
-            div.innerHTML = html
-            document.querySelector('.taskWrapper').appendChild(div)
+            div.innerHTML = html;
+            document.querySelector('.taskWrapper').appendChild(div);
         })
     })
 }
@@ -342,16 +301,16 @@ function uploadUncomingTasks(){
             let html = `
                 <div class="taskDesc">
                     <p class="taskNumber">№${el.taskNumber}</p>
-                    <input type="date" class="deadline" value="${el.taskDeadline}">
+                    <p class="deadline">Дедлайн: ${el.taskDeadline}</p>
                 </div>
                 <div class="taskText">
-                    <input type="text" class="enterTask" placeholder="Запишите задачу" onchange="enterTask(event)" value="${el.taskValue}">
+                    <p class="enterTask">${el.taskValue}</p>
                 </div>
                 <div class="radio" onclick="doneTask(event)"></div>
                 <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
             `;
-            div.innerHTML = html
-            document.querySelector('.taskWrapper').appendChild(div)
+            div.innerHTML = html;
+            document.querySelector('.taskWrapper').appendChild(div);
         })
     })
 }
@@ -371,15 +330,15 @@ function uploadCompletedTasks(){
             let html = `
                 <div class="taskDesc">
                     <p class="taskNumber">№${el.taskNumber}</p>
-                    <input type="date" class="deadline" value="${el.taskDeadline}">
+                    <p class="deadline">${el.taskDeadline}</p>
                 </div>
                 <div class="taskText">
-                    <input type="text" class="enterTask" placeholder="Запишите задачу" onchange="enterTask(event)" value="${el.taskValue}">
+                    <p class="enterTask">${el.taskValue}</p>
                 </div>
-                <i class="fa-solid fa-trash-can trash completedTrash" onclick="deleteTask(event)"></i>
+                <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
             `;
-            div.innerHTML = html
-            document.querySelector('.taskWrapper').appendChild(div)
+            div.innerHTML = html;
+            document.querySelector('.taskWrapper').appendChild(div);
         })
     })
 }
@@ -402,4 +361,76 @@ function deleteTask(event){
         })
     })
     task.remove();
+}
+
+function addTask(event) {
+    let elm = document.createElement('div');
+    elm.classList.add('wrapaddTask')
+    let html = `
+        <input type="text" class="addTask" placeholder="Запишите задачу">
+        <input type="date" class="enterDeadline">
+        <p class="plusTask" onclick="plusTask()">Добавить</p>
+    `;
+    elm.innerHTML = html;
+    event.currentTarget.classList.add('newaddToTop')
+    elm.classList.add('newwrapaddTask')
+    event.currentTarget.appendChild(elm)
+    event.currentTarget.removeAttribute("onclick")
+}
+
+var counterTask = 0;
+function plusTask() {
+    let lastElem = document.querySelector('.taskWrapper').lastElementChild;
+    if(lastElem){
+        let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
+        counterTask = taskNumber;
+    } else {
+        counterTask = 0;
+    }
+    counterTask++;
+    let taskValue = document.querySelector('.addTask').value;
+    let taskDeadline = document.querySelector('.enterDeadline').value;
+    if(taskValue.length == 0 || taskDeadline.length == 0){
+        alert('Чтобы добавить задачу, заполните все поля!')
+        return;
+    }
+    let div = document.createElement('div');
+    div.classList.add('task');
+    let html = `
+        <div class="taskDesc">
+            <p class="taskNumber">№${counterTask}</p>
+            <p class="deadline">Дедлайн: ${taskDeadline}</p>
+        </div>
+        <div class="taskText">
+            <p class="enterTask">${taskValue}</p>
+        </div>
+        <div class="radio" onclick="doneTask(event)"></div>
+        <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
+    `;
+    div.innerHTML = html;
+
+    document.querySelector('.addTask').value = '';
+    document.querySelector('.enterDeadline').value = '';
+    document.querySelector('.wrapaddTask').remove();
+    document.querySelector('.addToTop').classList.remove('newaddToTop');
+    document.querySelector('.taskWrapper').appendChild(div);
+    document.querySelector('.addToTop').outerHTML = '<div class="addToTop" onclick="addTask(event)"><p>+ Добавить задачу</p></div>';
+
+    let Category = document.querySelector('.active');
+    let activeCategory = Category.querySelector('.taskStatus').textContent;
+    let sectionName = document.querySelector('.currentField').textContent;
+    fetch('/enterTask', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            taskValue: taskValue,
+            sectionName: sectionName,
+            activeCategory: activeCategory,
+            taskNumber: counterTask,
+            taskDeadline: taskDeadline
+        })
+    })
+
 }

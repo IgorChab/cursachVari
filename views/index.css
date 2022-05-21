@@ -49,6 +49,7 @@ body{
     border-radius: 0;
     font-size: 23px;
     background-color: #18ACCD;
+    cursor: pointer;
 }
 .field:hover{
     background: #1590AB;
@@ -74,7 +75,7 @@ body{
     margin-top: 40px;
     margin-bottom: 30px;
 }
-.addTask{
+/* .addTask{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,7 +86,7 @@ body{
     border-radius: 50%;
     cursor: pointer;
     margin-left: 20px;
-}
+} */
 .activeTasks{
     display: flex;
     align-items: center;
@@ -120,21 +121,20 @@ body{
 .taskDesc input{
     background-color: #fff;
 }
-.enterTask{
-    outline: none;
-    border: none;
-    width: 563px;
-    height: 35px;
-    margin-left: 20px;
-}
 .radio{
     width: 20px;
     height: 20px;
     border-radius: 50%;
     border: 1px solid #000;
-    margin-left: 20px;
     cursor: pointer;
-    margin-right: 40px;
+    position: absolute;
+    right: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.radio i {
+    color:#18ACCD;
 }
 .taskNumber{
     margin-right: 20px;
@@ -275,12 +275,6 @@ input::placeholder{
 .active{
     color: #083A45;
 }
-.deadline{
-    margin-left: 20px;
-    cursor: pointer;
-    border: none;
-    background-color: none;
-}
 .doneTask{
     color: #fff;
     background-color: #18ACCD;
@@ -361,8 +355,67 @@ input::placeholder{
 }
 .trash{
     cursor: pointer;
+    position: absolute;
+    right: 40px;
 }
 .completedTrash{
     position: absolute;
     right: 40px;
+}
+.addToTop{
+    display: flex;
+    align-items: center;
+    margin: 20px 87px;
+    font-size: 16px;
+    color: #18ACCD;
+    height: 30px;
+    background-color: #eaeaea;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+.addToTop p {
+    display: inline-block;
+}
+.wrapaddTask{
+    display: flex;
+}
+.addTask{
+    padding: 10px 10px;
+    outline: none;
+    font-size: 12px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #18ACCD;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background-color: #eaeaea;
+
+}
+.newaddToTop{
+    flex-direction: column;
+    align-items: unset;
+    height: 120px;
+    cursor: default;
+}
+.newwrapaddTask{
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+.enterDeadline{
+    border-radius: 0;
+    background-color: #eaeaea;
+    outline: none;
+    font-size: 12px;
+    width: 100px;
+    border: none;
+}
+.plusTask{
+    position: absolute;
+    right: 30px;
+    bottom: 10px;
+    cursor: pointer;
+}
+.taskText p {
+    margin-left: 30px;
 }

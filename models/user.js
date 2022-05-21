@@ -46,7 +46,7 @@ const usersSchema = new mongoose.Schema({
             completedTask: [{
                 taskNumber: {type: String},
                 taskDeadline: {type: String},
-                taskValue: {type: String},
+                taskValue: {type: String}
             }],
         },
         thirdSection: {
