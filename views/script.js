@@ -434,3 +434,65 @@ function plusTask() {
     })
 
 }
+
+
+function editFirstSectionName(event) {
+    let sectionName = event.currentTarget.value.trim();
+    if(sectionName.length == 0){
+        alert("Название не может быть пустым")
+        event.currentTarget.value = firstSection;
+        return;
+    } else {
+        document.querySelector('.fieldItemFirst').textContent = sectionName
+        fetch('/editFirstSectionName', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                sectionName: sectionName,
+            })
+        })
+    }
+}
+
+
+function editSecondSectionName(event) {
+    let sectionName = event.currentTarget.value.trim();
+    if(sectionName.length == 0){
+        alert("Название не может быть пустым")
+        event.currentTarget.value = secondSection;
+        return;
+    } else {
+        document.querySelector('.fieldItemSecond').textContent = sectionName
+        fetch('/editSecondSectionName', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                sectionName: sectionName,
+            })
+        })
+    }
+}
+
+function editThirdSectionName(event) {
+    let sectionName = event.currentTarget.value.trim();
+    if(sectionName.length == 0){
+        alert("Название не может быть пустым")
+        event.currentTarget.value = thirdSection;
+        return;
+    } else {
+        document.querySelector('.fieldItemThird').textContent = sectionName
+        fetch('/editThirdSectionName', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                sectionName: sectionName,
+            })
+        })
+    }
+}

@@ -51,6 +51,12 @@ app.use(
     })
 )
 
+let username;
+let firstSection;
+let secondSection;
+let thirdSection;
+let photo;
+
 app.get('/', (req, res) => {
     res.redirect('register')
 })
@@ -66,38 +72,38 @@ app.get('/auth', sessionMiddleware, (req, res) => {
 })
 app.get('/app/firstSection', authMiddleware, (req, res) => {
     res.render('app', {
-        username: req.session.name,
-        firstSection: req.session.firstSection,
-        secondSection: req.session.secondSection,
-        thirdSection: req.session.thirdSection,
-        photo: req.session.photo
+        username: username,
+        firstSection: firstSection,
+        secondSection: secondSection,
+        thirdSection: thirdSection,
+        photo: photo
     })
 })
 app.get('/app/secondSection', authMiddleware, (req, res) => {
     res.render('secondSection', {
-        username: req.session.name,
-        firstSection: req.session.firstSection,
-        secondSection: req.session.secondSection,
-        thirdSection: req.session.thirdSection,
-        photo: req.session.photo
+        username: username,
+        firstSection: firstSection,
+        secondSection: secondSection,
+        thirdSection: thirdSection,
+        photo: photo
     })
 })
 app.get('/app/thirdSection', authMiddleware, (req, res) => {
     res.render('thirdSection', {
-        username: req.session.name,
-        firstSection: req.session.firstSection,
-        secondSection: req.session.secondSection,
-        thirdSection: req.session.thirdSection,
-        photo: req.session.photo
+        username: username,
+        firstSection: firstSection,
+        secondSection: secondSection,
+        thirdSection: thirdSection,
+        photo: photo
     })
 })
 app.get('/app/settings', authMiddleware, (req, res) => {
     res.render('settings', {
-        username: req.session.name,
-        firstSection: req.session.firstSection,
-        secondSection: req.session.secondSection,
-        thirdSection: req.session.thirdSection,
-        photo: req.session.photo
+        username: username,
+        firstSection: firstSection,
+        secondSection: secondSection,
+        thirdSection: thirdSection,
+        photo: photo
     })
 })
 app.post('/register', [
@@ -173,10 +179,10 @@ app.post('/auth', [
     } else {
         const User = await user.findOne({email: req.body.email});
         req.session.email = req.body.email
-        req.session.name = User.username
-        req.session.firstSection = User.sections.firstSection.sectionName;
-        req.session.secondSection = User.sections.secondSection.sectionName;
-        req.session.thirdSection = User.sections.thirdSection.sectionName;
+        username = User.username;
+        firstSection = User.sections.firstSection.sectionName;
+        secondSection = User.sections.secondSection.sectionName;
+        thirdSection = User.sections.thirdSection.sectionName;
         req.session.login = true;
         req.session.save();
         res.redirect('/app/firstSection')
@@ -281,8 +287,7 @@ app.post('/updateAvatar', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         user.profilePhoto = req.body.photo;
         user.save();
-        req.session.photo = req.body.photo;
-        req.session.save();
+        photo = req.body.photo;
     })   
 })
 
@@ -499,4 +504,33 @@ app.post('/pushToCompleted', (req, res) => {
             user.save();
         }
     })
+})
+
+app.post('/editFirstSectionName', (req, res) => {
+    user.findOne({email: req.session.email}).then(user => {
+        user.sections.firstSection.sectionName = req.body.sectionName;
+        user.save()
+        firstSection = req.body.sectionName;
+    })
+})
+
+app.post('/editSecondSectionName', (req, res) => {
+    user.findOne({email: req.session.email}).then(user => {
+        user.sections.secondSection.sectionName = req.body.sectionName;
+        user.save()
+        secondSection = req.body.sectionName
+    })
+})
+
+app.post('/editThirdSectionName', (req, res) => {
+    user.findOne({email: req.session.email}).then(user => {
+        user.sections.thirdSection.sectionName = req.body.sectionName;
+        user.save()
+        thirdSection = req.body.sectionName
+    })
+})
+
+app.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/')
 })

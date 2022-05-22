@@ -149,9 +149,7 @@ body{
     position: absolute;
     top: -40px;
 }
-.second{
-    margin-left: 100px;
-}
+
 .settingsBlock{
     border: 1px solid #000;
     border-radius: 30px;
@@ -163,7 +161,6 @@ body{
     height: 460px;
 }
 .sb2{
-    margin-left: 63px;
     height: 460px;
 }
 #updateAvatar{
@@ -317,7 +314,7 @@ input::placeholder{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    gap: 50px;
 }
 .sett{
     margin: 0px;
@@ -352,6 +349,16 @@ input::placeholder{
     margin-top: 55px;
     margin-bottom: 100px;
     position: relative;
+}
+.logout{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 87px;
+    color: #376699;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
 }
 .trash{
     cursor: pointer;
@@ -418,4 +425,30 @@ input::placeholder{
 }
 .taskText p {
     margin-left: 30px;
+}
+.personalization{
+    border: 1px solid #000;
+    border-radius: 30px;
+    width: 258px;
+    display: inline-block;
+    padding: 20px;
+    font-size: 16px;
+}
+.personalization p{
+    margin-bottom: 15px;
+    color: #000;
+}
+.first{
+    margin-bottom: 10px;
+}
+.second{
+    margin-bottom: 10px;
+}
+.titleSett{
+    color: #18ACCD;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.wrapPersonalization{
+    margin-top: -290px;
 }

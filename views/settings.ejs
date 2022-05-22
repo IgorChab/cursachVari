@@ -11,6 +11,11 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script defer src="script.js"></script>
+    <script>
+        let firstSection = '<%= firstSection %>';
+        let secondSection = '<%= secondSection%>';
+        let thirdSection = '<%= thirdSection %>';
+    </script>
 </head>
 <body>
     <div class="aside">
@@ -25,9 +30,9 @@
             <div class="currentUser"><%= username %></div>
         </div>
         
-        <a href = "/app/firstSection" class="field"><p class="fieldItem"><%= firstSection %></p></a>
-        <a href = "/app/secondSection" class="field"><p class="fieldItem"><%= secondSection %></p></a>
-        <a href = "/app/thirdSection" class="field"><p class="fieldItem"><%= thirdSection %></p></a>
+        <a href = "/app/firstSection" class="field"><p class="fieldItem fieldItemFirst"><%= firstSection %></p></a>
+        <a href = "/app/secondSection" class="field"><p class="fieldItem fieldItemSecond"><%= secondSection %></p></a>
+        <a href = "/app/thirdSection" class="field"><p class="fieldItem fieldItemThitd"><%= thirdSection %></p></a>
 
         <a href = "/app/settings" class="field"><p class="fieldItem">Настройки</p></a>
     </div>
@@ -35,6 +40,10 @@
     <div class="settings">
         <div class="groupSett">
             <div class="currentField sett">Настройки</div>
+            <a href="/logout" class="logout">
+                <p>Выход</p>
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
         </div>
         <div class="wrapBlocks">
             <div class="settingsBlock sb1">
@@ -77,6 +86,15 @@
                         <input type="text" placeholder="Новое имя" class="newName">
                         <input type="submit" value="Изменить имя пользователя" class="btn">
                     </form>
+                </div>
+            </div>
+            <div class="wrapPersonalization">
+                <p class="titleSett">Персонализация</p>
+                <div class="personalization">
+                    <p>Названия разделов</p>
+                    <input type="text" class="first" value="<%= firstSection %>" onchange="editFirstSectionName(event)">
+                    <input type="text" class="second" value="<%= secondSection %>" onchange="editSecondSectionName(event)">
+                    <input type="text" class="third" value="<%= thirdSection %>" onchange="editThirdSectionName(event)">
                 </div>
             </div>
         </div>
