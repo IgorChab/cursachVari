@@ -183,6 +183,7 @@ app.post('/auth', [
         firstSection = User.sections.firstSection.sectionName;
         secondSection = User.sections.secondSection.sectionName;
         thirdSection = User.sections.thirdSection.sectionName;
+        photo = User.profilePhoto;
         req.session.login = true;
         req.session.save();
         res.redirect('/app/firstSection')
