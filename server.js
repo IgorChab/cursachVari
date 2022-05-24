@@ -75,7 +75,13 @@ app.get('/auth', sessionMiddleware, (req, res) => {
         validationError: undefined
     })
 })
-app.get('/app/firstSection', authMiddleware, (req, res) => {
+app.get('/app/firstSection', authMiddleware, async (req, res) => {
+    const User = await user.findOne({email: req.session.email});
+        username = User.username;
+        firstSection = User.sections.firstSection.sectionName;
+        secondSection = User.sections.secondSection.sectionName;
+        thirdSection = User.sections.thirdSection.sectionName;
+        photo = User.profilePhoto;
     res.render('app', {
         username: username,
         firstSection: firstSection,
@@ -84,7 +90,13 @@ app.get('/app/firstSection', authMiddleware, (req, res) => {
         photo: photo
     })
 })
-app.get('/app/secondSection', authMiddleware, (req, res) => {
+app.get('/app/secondSection', authMiddleware, async (req, res) => {
+    const User = await user.findOne({email: req.session.email});
+        username = User.username;
+        firstSection = User.sections.firstSection.sectionName;
+        secondSection = User.sections.secondSection.sectionName;
+        thirdSection = User.sections.thirdSection.sectionName;
+        photo = User.profilePhoto;
     res.render('secondSection', {
         username: username,
         firstSection: firstSection,
@@ -93,7 +105,13 @@ app.get('/app/secondSection', authMiddleware, (req, res) => {
         photo: photo
     })
 })
-app.get('/app/thirdSection', authMiddleware, (req, res) => {
+app.get('/app/thirdSection', authMiddleware, async (req, res) => {
+    const User = await user.findOne({email: req.session.email});
+        username = User.username;
+        firstSection = User.sections.firstSection.sectionName;
+        secondSection = User.sections.secondSection.sectionName;
+        thirdSection = User.sections.thirdSection.sectionName;
+        photo = User.profilePhoto;
     res.render('thirdSection', {
         username: username,
         firstSection: firstSection,
@@ -102,7 +120,13 @@ app.get('/app/thirdSection', authMiddleware, (req, res) => {
         photo: photo
     })
 })
-app.get('/app/settings', authMiddleware, (req, res) => {
+app.get('/app/settings', authMiddleware, async (req, res) => {
+    const User = await user.findOne({email: req.session.email});
+        username = User.username;
+        firstSection = User.sections.firstSection.sectionName;
+        secondSection = User.sections.secondSection.sectionName;
+        thirdSection = User.sections.thirdSection.sectionName;
+        photo = User.profilePhoto;
     res.render('settings', {
         username: username,
         firstSection: firstSection,
