@@ -1,3 +1,4 @@
+// когда мы заходим в проложение по дефолту подгружаются активные задачи
 let urlPath = location.pathname;
 if (urlPath == "/app/firstSection/") {
     defaultUploadActiveTasks()
@@ -7,6 +8,7 @@ if (urlPath == "/app/firstSection/") {
     defaultUploadActiveTasks()
 }
 
+// в этой функции делается запрос на сервер, на сервере из бд достаются задачи и возвращаются в эту функцию, затем выводятся на экран
 function defaultUploadActiveTasks(){
     let currentSection = document.querySelector('.currentField').textContent;
     fetch('/uploadActiveTasks', {
@@ -36,6 +38,7 @@ function defaultUploadActiveTasks(){
     })
 }
 
+// эта функция отвечает за перемещение по вкладкам активные, предстоящие и завершенные задачи и вывод задач этой вкладки на экран
 function choiceCategory(event){
     let currentElem = event.currentTarget;
     if (currentElem.getAttribute('class') != 'category active') {
@@ -74,6 +77,7 @@ function choiceCategory(event){
     }
 }
 
+// в этой функции выбранная задача попадает в категорию завершенных и удаляется из списка активных или предстоящих
 function doneTask(event){
     if (event.currentTarget.getAttribute('class') != "radio radioDone") {
         event.currentTarget.parentNode.classList.add('doneTask');
@@ -106,15 +110,9 @@ function doneTask(event){
         }, 500);
     }
 
-    // } else {
-    //     event.currentTarget.parentNode.classList.remove('doneTask');
-    //     event.currentTarget.parentNode.querySelector('.taskDesc').classList.remove('done');
-    //     event.currentTarget.previousElementSibling.classList.remove('taskDone');
-    //     event.currentTarget.classList.remove('radioDone')
-    // }
 }
 
-//изменение пароля
+// здесь получаются данные которые были введены в форму и отправляются на сервер для изменения пароля
 if(document.querySelector('#updatePass')){
     const form = document.querySelector('#updatePass');
     const oldPass = document.querySelector('.oldPass');
@@ -149,7 +147,7 @@ if(document.querySelector('#updatePass')){
 }
 
 
-//изменение пароля
+//// здесь получаются данные которые были введены в форму и отправляются на сервер для изменения почты
 if(document.querySelector('#updateEmail')){
     const form = document.querySelector('#updateEmail');
     const oldEmail = document.querySelector('.oldEmail');
@@ -183,7 +181,7 @@ if(document.querySelector('#updateEmail')){
         
 }
 
-
+// обновление аватарки, выбранная фотография отправляется на сервер и добавляется в бд
 if(document.querySelector('#updatePhoto')){
     function updateImage(event) {
         let file = event.target.files[0];
@@ -223,7 +221,7 @@ if(document.querySelector('#updatePhoto')){
     }
 }
 
-
+// здесь получаются данные которые были введены в форму и отправляются на сервер для изменения имени
 if(document.querySelector('#updateUsername')){
     const form = document.querySelector('#updateUsername');
     const oldName = document.querySelector('.oldName');
@@ -257,6 +255,7 @@ if(document.querySelector('#updateUsername')){
         
 }
 
+// загрузка активных задач
 function uploadActiveTasks(){
     let currentSection = document.querySelector('.currentField').textContent;
     fetch('/uploadActiveTasks', {
@@ -286,6 +285,7 @@ function uploadActiveTasks(){
     })
 }
 
+// загрузка предстоящих задач
 function uploadUncomingTasks(){
     let currentSection = document.querySelector('.currentField').textContent;
     fetch('/uploadUncomingTasks', {
@@ -315,6 +315,7 @@ function uploadUncomingTasks(){
     })
 }
 
+// загрузка выполненных задач
 function uploadCompletedTasks(){
     let currentSection = document.querySelector('.currentField').textContent;
     fetch('/uploadCompletedTasks', {
@@ -343,6 +344,7 @@ function uploadCompletedTasks(){
     })
 }
 
+// запрос на сервер для удалении задачи
 function deleteTask(event){
     let task = event.currentTarget.parentNode;
     let taskNumber = task.querySelector('.taskNumber').textContent[1];
@@ -362,7 +364,7 @@ function deleteTask(event){
     })
     task.remove();
 }
-
+ 
 function addTask(event) {
     let elm = document.createElement('div');
     elm.classList.add('wrapaddTask')
@@ -379,6 +381,7 @@ function addTask(event) {
 }
 
 var counterTask = 0;
+// добавляет задачу на экран, когда введена задача и дедлайн
 function plusTask() {
     let lastElem = document.querySelector('.taskWrapper').lastElementChild;
     if(lastElem){
@@ -435,7 +438,7 @@ function plusTask() {
 
 }
 
-
+// запросы на сервер для редактировании разделов
 function editFirstSectionName(event) {
     let sectionName = event.currentTarget.value.trim();
     if(sectionName.length == 0){
@@ -456,7 +459,7 @@ function editFirstSectionName(event) {
     }
 }
 
-
+// запросы на сервер для редактировании разделов
 function editSecondSectionName(event) {
     let sectionName = event.currentTarget.value.trim();
     if(sectionName.length == 0){
@@ -476,7 +479,7 @@ function editSecondSectionName(event) {
         })
     }
 }
-
+// запросы на сервер для редактировании разделов
 function editThirdSectionName(event) {
     let sectionName = event.currentTarget.value.trim();
     if(sectionName.length == 0){

@@ -1,3 +1,4 @@
+// в этом файде описывается структура бд, создается модель пользователя
 const mongoose = require('mongoose');
 const usersSchema = new mongoose.Schema({
     username: {

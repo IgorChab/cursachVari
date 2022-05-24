@@ -1,3 +1,4 @@
+// здесь подключаются различные модули
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -11,7 +12,7 @@ const session = require('express-session')
 const authMiddleware = require('./middleware/authMiddleware');
 const sessionMiddleware = require('./middleware/sessionMiddleware');
 
-
+// определяем промежуточное по (middleware)
 app.set('view engine', 'ejs');
 app.use(express.static('views'));
 app.use('/app/firstSection', express.static('views'));
@@ -21,6 +22,7 @@ app.use('/app/settings', express.static('views'));
 app.use(express.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 
+// эта функция подключает базу данных и запускает сервер
 const start = async () => {
     try {
         await mongoose
@@ -37,6 +39,7 @@ const start = async () => {
 
 start()
 
+// здесь подключаются сессии и определяются различные параметры
 app.use(
     session({
         secret: "secretKey",
@@ -51,12 +54,14 @@ app.use(
     })
 )
 
+// объявляем глобальные переменные, которые потом будем рендерить в шаблон
 let username;
 let firstSection;
 let secondSection;
 let thirdSection;
 let photo;
 
+// здесь определяются маршруты приложения, и какаие функции работают на этих маршрутах
 app.get('/', (req, res) => {
     res.redirect('register')
 })
@@ -106,6 +111,8 @@ app.get('/app/settings', authMiddleware, (req, res) => {
         photo: photo
     })
 })
+
+// в этом роуте происходит регистрация, а также валидация формы регистрации
 app.post('/register', [
     check('username', 'Username не может быть пустым').trim().notEmpty().escape(),
     check('email','email не может быть пустым').trim().notEmpty().bail().escape().custom(email => {
@@ -152,6 +159,7 @@ app.post('/register', [
         .then(res.redirect('auth'))
 });
 
+// в этом роуте происходит авторизация, а также валидация формы авторизация
 app.post('/auth', [
     check('email', 'Email не может быть пустым').isEmail().bail().trim().escape()
     .custom(email => {
@@ -190,6 +198,7 @@ app.post('/auth', [
     }
 });
 
+// в этом роуте добавляются задачи в бд
 app.post('/enterTask', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         switch (req.body.sectionName) {
@@ -257,6 +266,7 @@ app.post('/enterTask', (req, res) => {
     })
 })
 
+// обновление пароля
 app.post('/updatePass', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         let validOldPass = bcrypt.compareSync(req.body.oldPass, user.password)
@@ -272,6 +282,7 @@ app.post('/updatePass', (req, res) => {
     })
 })
 
+// обновление почты
 app.post('/updateEmail', (req, res) => {
     user.findOne({email: req.body.oldEmail}).then(user => {
         if(!user){
@@ -284,6 +295,7 @@ app.post('/updateEmail', (req, res) => {
     })
 })
 
+// загрузка аватарки
 app.post('/updateAvatar', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         user.profilePhoto = req.body.photo;
@@ -292,6 +304,7 @@ app.post('/updateAvatar', (req, res) => {
     })   
 })
 
+// обновление имени пользователя
 app.post('/updateUsername', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         if(user.username != req.body.oldName){
@@ -304,6 +317,7 @@ app.post('/updateUsername', (req, res) => {
     }) 
 })
 
+// здесь из бд достаются активные задачи и возвращаются на клиент
 app.post('/uploadActiveTasks', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         if(req.body.currentSection == 'Дом'){
@@ -318,6 +332,7 @@ app.post('/uploadActiveTasks', (req, res) => {
     })
 })
 
+// здесь из бд достаются предстоящие задачи и возвращаются на клиент
 app.post('/uploadUncomingTasks', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         if(req.body.currentSection == 'Дом'){
@@ -332,6 +347,7 @@ app.post('/uploadUncomingTasks', (req, res) => {
     })
 })
 
+// здесь из бд достаются завершенные задачи и возвращаются на клиент
 app.post('/uploadCompletedTasks', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         if(req.body.currentSection == 'Дом'){
@@ -346,6 +362,7 @@ app.post('/uploadCompletedTasks', (req, res) => {
     })
 })
 
+// удаление задач
 app.post('/deleteTask', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         if(req.body.currentSection == 'Дом' && req.body.activeCategory == 'Активные задачи'){
@@ -423,7 +440,7 @@ app.post('/deleteTask', (req, res) => {
     })
 })
 
-
+// добавление задач в раздел завершенные
 app.post('/pushToCompleted', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         if(req.body.sectionName == 'Дом' && req.body.activeCategory == 'Активные задачи'){
@@ -507,6 +524,8 @@ app.post('/pushToCompleted', (req, res) => {
     })
 })
 
+
+// редактирование разделов дом работа и учеба
 app.post('/editFirstSectionName', (req, res) => {
     user.findOne({email: req.session.email}).then(user => {
         user.sections.firstSection.sectionName = req.body.sectionName;
@@ -531,6 +550,7 @@ app.post('/editThirdSectionName', (req, res) => {
     })
 })
 
+// выход из приложения
 app.get('/logout', (req, res) => {
     req.session.destroy()
     res.redirect('/')
