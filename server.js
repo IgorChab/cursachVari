@@ -168,16 +168,16 @@ app.post('/auth', [
                 return Promise.reject(`Пользователь с email: ${email} не найден`);
             }
         })
-    }).bail().escape()
-    .custom(( email, {req} ) => {
-            return user.findOne({email: req.body.email}).then(candidate => {
-            const validPass = bcrypt.compareSync(req.body.password, candidate.password);
-            if(!validPass){
-                return Promise.reject(`Пользователь с паролем: ${req.body.password} не найден`);
-            }
-        })
-    }).escape(),
-    check('password', 'Не менее 8 символов').isLength({min: 8})
+    }).bail().escape(),
+    check('password', 'Не менее 8 символов').isLength({min: 8}).bail()
+    .custom(( password, {req} ) => {
+        return user.findOne({email: req.body.email}).then(candidate => {
+        const validPass = bcrypt.compareSync(password, candidate.password);
+        if(!validPass){
+            return Promise.reject(`Пользователь с паролем: ${password} не найден`);
+        }
+    })
+}).escape(),
 ], async (req, res) => {
     const validationError = validationResult(req);
     if(!validationError.isEmpty()){
