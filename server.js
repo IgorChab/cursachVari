@@ -336,7 +336,7 @@ app.post('/updateUsername', (req, res) => {
         } else {
             user.username = req.body.newName;
             user.save();
-            res.end(JSON.stringify({success: "Email успешно изменен :)"}))
+            res.end(JSON.stringify({success: "Username успешно изменен :)", newName: req.body.newName}))
         }   
     }) 
 })

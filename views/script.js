@@ -229,7 +229,7 @@ if(document.querySelector('#updateUsername')){
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            if(oldName.value.trim().length < 8 || newName.value.trim().length < 8){
+            if(oldName.value.trim().length == 0 || newName.value.trim().length == 0){
                 return false;
             }
 
@@ -248,6 +248,7 @@ if(document.querySelector('#updateUsername')){
                 if(response.error){
                     alert(response.error)
                 } else {
+                    document.querySelector('.currentUser').textContent = response.newName;
                     alert(response.success)
                 }
             })
