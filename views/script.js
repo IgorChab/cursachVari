@@ -10,13 +10,25 @@ if (urlPath == "/app/firstSection/") {
 
 // в этой функции делается запрос на сервер, на сервере из бд достаются задачи и возвращаются в эту функцию, затем выводятся на экран
 function defaultUploadActiveTasks(){
-    let currentSection = document.querySelector('.currentField').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
     fetch('/uploadActiveTasks', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({currentSection: currentSection})
+        body: JSON.stringify({
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            thirdSectionName: thirdSectionName
+        })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
             var div = document.createElement('div');
@@ -86,7 +98,15 @@ function doneTask(event){
         event.currentTarget.classList.add('radioDone');
         event.currentTarget.innerHTML = '<i class="fa-solid fa-check"></i>';
         var task = event.currentTarget.parentNode;
-        let sectionName = document.querySelector('.currentField').textContent;
+        if(location.pathname == "/app/firstSection/"){
+            var firstSectionName = document.querySelector('.firstSection').textContent;
+        }
+        if(location.pathname == "/app/secondSection/"){
+            var secondSectionName = document.querySelector('.secondSection').textContent;
+        }
+        if(location.pathname == "/app/thirdSection/"){
+            var thirdSectionName = document.querySelector('.thirdSection').textContent;
+        }
         let taskNumber = task.querySelector('.taskNumber').textContent[1];
         let taskDeadline = task.querySelector('.deadline').textContent;
         let taskValue = task.querySelector('.enterTask').textContent;
@@ -98,7 +118,9 @@ function doneTask(event){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                sectionName: sectionName,
+                firstSectionName: firstSectionName,
+                secondSectionName: secondSectionName,
+                thirdSectionName: thirdSectionName,
                 taskNumber: taskNumber,
                 taskDeadline: taskDeadline,
                 taskValue: taskValue,
@@ -258,13 +280,25 @@ if(document.querySelector('#updateUsername')){
 
 // загрузка активных задач
 function uploadActiveTasks(){
-    let currentSection = document.querySelector('.currentField').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
     fetch('/uploadActiveTasks', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({currentSection: currentSection})
+        body: JSON.stringify({
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            thirdSectionName: thirdSectionName
+        })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
             let div = document.createElement('div');
@@ -288,13 +322,25 @@ function uploadActiveTasks(){
 
 // загрузка предстоящих задач
 function uploadUncomingTasks(){
-    let currentSection = document.querySelector('.currentField').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
     fetch('/uploadUncomingTasks', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({currentSection: currentSection})
+        body: JSON.stringify({
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            thirdSectionName: thirdSectionName
+        })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
             let div = document.createElement('div');
@@ -318,13 +364,25 @@ function uploadUncomingTasks(){
 
 // загрузка выполненных задач
 function uploadCompletedTasks(){
-    let currentSection = document.querySelector('.currentField').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
     fetch('/uploadCompletedTasks', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({currentSection: currentSection})
+        body: JSON.stringify({
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            thirdSectionName: thirdSectionName
+        })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
             let div = document.createElement('div');
@@ -349,9 +407,17 @@ function uploadCompletedTasks(){
 function deleteTask(event){
     let task = event.currentTarget.parentNode;
     let taskNumber = task.querySelector('.taskNumber').textContent[1];
-    let currentSection = document.querySelector('.currentField').textContent;
     let Category = document.querySelector('.active');
     let activeCategory = Category.querySelector('.taskStatus').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
     fetch('/deleteTask', {
         method: 'post',
         headers: {
@@ -359,7 +425,9 @@ function deleteTask(event){
         },
         body: JSON.stringify({
             taskNumber: taskNumber,
-            currentSection: currentSection,
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            thirdSectionName: thirdSectionName,
             activeCategory: activeCategory
         })
     })
@@ -422,7 +490,15 @@ function plusTask() {
 
     let Category = document.querySelector('.active');
     let activeCategory = Category.querySelector('.taskStatus').textContent;
-    let sectionName = document.querySelector('.currentField').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
     fetch('/enterTask', {
         method: 'post',
         headers: {
@@ -430,7 +506,9 @@ function plusTask() {
         },
         body: JSON.stringify({
             taskValue: taskValue,
-            sectionName: sectionName,
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            thirdSectionName: thirdSectionName,
             activeCategory: activeCategory,
             taskNumber: counterTask,
             taskDeadline: taskDeadline
