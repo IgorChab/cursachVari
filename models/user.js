@@ -17,17 +17,14 @@ const usersSchema = new mongoose.Schema({
         firstSection: {
             sectionName: {type: String},
             activeTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
             uncomingTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
             completedTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
@@ -35,17 +32,14 @@ const usersSchema = new mongoose.Schema({
         secondSection: {
             sectionName: {type: String},
             activeTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
             uncomingTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
             completedTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String}
             }],
@@ -53,17 +47,14 @@ const usersSchema = new mongoose.Schema({
         thirdSection: {
             sectionName: {type: String},
             activeTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
             uncomingTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],
             completedTask: [{
-                taskNumber: {type: String},
                 taskDeadline: {type: String},
                 taskValue: {type: String},
             }],

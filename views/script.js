@@ -31,15 +31,25 @@ function defaultUploadActiveTasks(){
         })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
+            let lastElem = document.querySelector('.taskWrapper').lastElementChild;
+            if(lastElem){
+                let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
+                counterTask = taskNumber;
+            } else {
+                counterTask = 0;
+            }
+            counterTask++;
             var div = document.createElement('div');
             div.classList.add('task');
+            div.setAttribute('onclick', 'openTask(event)')
             let html = `
                 <div class="taskDesc">
-                    <p class="taskNumber">№${el.taskNumber}</p>
+                    <p class="taskNumber">№${counterTask}</p>
                     <p class="deadline">Дедлайн: ${el.taskDeadline}</p>
                 </div>
                 <div class="taskText">
                     <p class="enterTask">${el.taskValue}</p>
+                    <p id="taskID">${el._id}</p>
                 </div>
                 <div class="radio" onclick="doneTask(event)"></div>
                 <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
@@ -107,7 +117,7 @@ function doneTask(event){
         if(location.pathname == "/app/thirdSection/"){
             var thirdSectionName = document.querySelector('.thirdSection').textContent;
         }
-        let taskNumber = task.querySelector('.taskNumber').textContent[1];
+        let taskID = task.querySelector('#taskID').textContent;
         let taskDeadline = task.querySelector('.deadline').textContent;
         let taskValue = task.querySelector('.enterTask').textContent;
         let Category = document.querySelector('.active');
@@ -121,7 +131,7 @@ function doneTask(event){
                 firstSectionName: firstSectionName,
                 secondSectionName: secondSectionName,
                 thirdSectionName: thirdSectionName,
-                taskNumber: taskNumber,
+                taskID: taskID,
                 taskDeadline: taskDeadline,
                 taskValue: taskValue,
                 activeCategory: activeCategory
@@ -301,15 +311,25 @@ function uploadActiveTasks(){
         })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
+            let lastElem = document.querySelector('.taskWrapper').lastElementChild;
+            if(lastElem){
+                let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
+                counterTask = taskNumber;
+            } else {
+                counterTask = 0;
+            }
+            counterTask++;
             let div = document.createElement('div');
             div.classList.add('task');
+            div.setAttribute('onclick', 'openTask(event)')
             let html = `
             <div class="taskDesc">
-                <p class="taskNumber">№${el.taskNumber}</p>
+                <p class="taskNumber">№${counterTask}</p>
                 <p class="deadline">Дедлайн: ${el.taskDeadline}</p>
             </div>
             <div class="taskText">
                 <p class="enterTask">${el.taskValue}</p>
+                <p id="taskID">${el._id}</p>
             </div>
             <div class="radio" onclick="doneTask(event)"></div>
             <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
@@ -343,15 +363,25 @@ function uploadUncomingTasks(){
         })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
+            let lastElem = document.querySelector('.taskWrapper').lastElementChild;
+            if(lastElem){
+                let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
+                counterTask = taskNumber;
+            } else {
+                counterTask = 0;
+            }
+            counterTask++;
             let div = document.createElement('div');
             div.classList.add('task');
+            div.setAttribute('onclick', 'openTask(event)')
             let html = `
                 <div class="taskDesc">
-                    <p class="taskNumber">№${el.taskNumber}</p>
+                    <p class="taskNumber">№${counterTask}</p>
                     <p class="deadline">Дедлайн: ${el.taskDeadline}</p>
                 </div>
                 <div class="taskText">
                     <p class="enterTask">${el.taskValue}</p>
+                    <p id="taskID">${el._id}</p>
                 </div>
                 <div class="radio" onclick="doneTask(event)"></div>
                 <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
@@ -385,15 +415,25 @@ function uploadCompletedTasks(){
         })
     }).then(res => { return res.json() }).then(response => {
         response.forEach(el => {
+            let lastElem = document.querySelector('.taskWrapper').lastElementChild;
+            if(lastElem){
+                let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
+                counterTask = taskNumber;
+            } else {
+                counterTask = 0;
+            }
+            counterTask++;
             let div = document.createElement('div');
             div.classList.add('task');
+            div.setAttribute('onclick', 'openTask(event)')
             let html = `
                 <div class="taskDesc">
-                    <p class="taskNumber">№${el.taskNumber}</p>
+                    <p class="taskNumber">№${counterTask}</p>
                     <p class="deadline">${el.taskDeadline}</p>
                 </div>
                 <div class="taskText">
                     <p class="enterTask">${el.taskValue}</p>
+                    <p id="taskID">${el._id}</p>
                 </div>
                 <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
             `;
@@ -406,7 +446,7 @@ function uploadCompletedTasks(){
 // запрос на сервер для удалении задачи
 function deleteTask(event){
     let task = event.currentTarget.parentNode;
-    let taskNumber = task.querySelector('.taskNumber').textContent[1];
+    let taskID = task.querySelector('#taskID').textContent;
     let Category = document.querySelector('.active');
     let activeCategory = Category.querySelector('.taskStatus').textContent;
     if(location.pathname == "/app/firstSection/"){
@@ -424,7 +464,7 @@ function deleteTask(event){
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            taskNumber: taskNumber,
+            taskID: taskID,
             firstSectionName: firstSectionName,
             secondSectionName: secondSectionName,
             thirdSectionName: thirdSectionName,
@@ -452,40 +492,16 @@ function addTask(event) {
 var counterTask = 0;
 // добавляет задачу на экран, когда введена задача и дедлайн
 function plusTask() {
-    let lastElem = document.querySelector('.taskWrapper').lastElementChild;
-    if(lastElem){
-        let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
-        counterTask = taskNumber;
-    } else {
-        counterTask = 0;
-    }
-    counterTask++;
     let taskValue = document.querySelector('.addTask').value;
     let taskDeadline = document.querySelector('.enterDeadline').value;
     if(taskValue.length == 0 || taskDeadline.length == 0){
         alert('Чтобы добавить задачу, заполните все поля!')
         return;
     }
-    let div = document.createElement('div');
-    div.classList.add('task');
-    let html = `
-        <div class="taskDesc">
-            <p class="taskNumber">№${counterTask}</p>
-            <p class="deadline">Дедлайн: ${taskDeadline}</p>
-        </div>
-        <div class="taskText">
-            <p class="enterTask">${taskValue}</p>
-        </div>
-        <div class="radio" onclick="doneTask(event)"></div>
-        <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
-    `;
-    div.innerHTML = html;
-
     document.querySelector('.addTask').value = '';
     document.querySelector('.enterDeadline').value = '';
     document.querySelector('.wrapaddTask').remove();
     document.querySelector('.addToTop').classList.remove('newaddToTop');
-    document.querySelector('.taskWrapper').appendChild(div);
     document.querySelector('.addToTop').outerHTML = '<div class="addToTop" onclick="addTask(event)"><p>+ Добавить задачу</p></div>';
 
     let Category = document.querySelector('.active');
@@ -510,9 +526,34 @@ function plusTask() {
             secondSectionName: secondSectionName,
             thirdSectionName: thirdSectionName,
             activeCategory: activeCategory,
-            taskNumber: counterTask,
             taskDeadline: taskDeadline
         })
+    }).then(res => { return res.json() }).then(response => {
+        let lastElem = document.querySelector('.taskWrapper').lastElementChild;
+        if(lastElem){
+            let taskNumber = lastElem.querySelector('.taskNumber').textContent[1];
+            counterTask = taskNumber;
+        } else {
+            counterTask = 0;
+        }
+        counterTask++;
+        let div = document.createElement('div');
+        div.classList.add('task');
+        div.setAttribute('onclick', 'openTask(event)')
+        let html = `
+            <div class="taskDesc">
+                <p class="taskNumber">№${counterTask}</p>
+                <p class="deadline">Дедлайн: ${response.task.taskDeadline}</p>
+            </div>
+            <div class="taskText">
+                <p class="enterTask">${response.task.taskValue}</p>
+                <p id="taskID">${response.task._id}</p>
+            </div>
+            <div class="radio" onclick="doneTask(event)"></div>
+            <i class="fa-solid fa-trash-can trash" onclick="deleteTask(event)"></i>
+        `;
+        div.innerHTML = html;
+        document.querySelector('.taskWrapper').appendChild(div);
     })
 
 }
@@ -577,4 +618,188 @@ function editThirdSectionName(event) {
             })
         })
     }
+}
+
+function openTask(event) {
+    if(event.currentTarget.className == 'task openTask'){
+        event.currentTarget.classList.remove('openTask')
+        if(event.currentTarget.querySelector('.taskDesc').querySelector('.edit') ||  event.currentTarget.querySelector('.taskDesc').querySelector('.relocate')){
+            event.currentTarget.querySelector('.taskDesc').querySelector('.edit').remove();
+            event.currentTarget.querySelector('.taskDesc').querySelector('.relocate').remove();
+        }
+        event.currentTarget.querySelector('.taskDesc').style.paddingBottom = '';
+        event.currentTarget.querySelector('.enterTask').style.paddingBottom = '';
+        if(event.currentTarget.querySelector('.radio')){
+            event.currentTarget.querySelector('.radio').style.marginBottom = '';
+        }
+        event.currentTarget.querySelector('.trash').style.marginBottom = '';
+        event.currentTarget.querySelector('.enterTask').style.wordBreak = 'unset';
+    } else {
+        event.currentTarget.classList.add('openTask')
+        let div = document.createElement('div');
+        div.classList.add('edit')
+        div.setAttribute('onclick', 'editTask(event)');
+        div.textContent = 'Изменить'
+        let el = document.createElement('div');
+        el.classList.add('relocate')
+        if(document.querySelector('.active').querySelector('.taskStatus').textContent == "Предстоящие задачи"){
+            el.textContent = 'Переместить в активные';
+            el.setAttribute('onclick', 'relocateToActive(event)');
+            event.currentTarget.querySelector('.taskDesc').append(el);
+            event.currentTarget.querySelector('.taskDesc').appendChild(div);
+        }
+        if(document.querySelector('.active').querySelector('.taskStatus').textContent == "Активные задачи"){
+            el.textContent = 'Переместить в предстоящие';
+            el.setAttribute('onclick', "relocateToUncoming(event)");
+            event.currentTarget.querySelector('.taskDesc').append(el);
+            event.currentTarget.querySelector('.taskDesc').appendChild(div);
+        }
+        event.currentTarget.querySelector('.taskDesc').style.paddingBottom = '200px';
+        event.currentTarget.querySelector('.enterTask').style.paddingBottom = '200px';
+        if( event.currentTarget.querySelector('.radio')){
+            event.currentTarget.querySelector('.radio').style.marginBottom = '200px';
+        }
+        event.currentTarget.querySelector('.trash').style.marginBottom = '200px';
+        event.currentTarget.querySelector('.enterTask').style.wordBreak = 'break-all';
+    }
+}
+
+
+
+
+function relocateToActive(event) {
+    let task = event.currentTarget.parentNode.parentNode;
+    let taskValue = task.querySelector('.enterTask').textContent;
+    let taskDeadline = task.querySelector('.deadline').textContent;
+    let taskID = task.querySelector('#taskID').textContent;
+    taskDeadline = taskDeadline.substring(taskDeadline.indexOf(" ") + 1)
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
+    fetch('/relocateToActive', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            taskValue: taskValue,
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            taskDeadline: taskDeadline,
+            thirdSectionName: thirdSectionName,
+            taskID: taskID
+        })
+    })
+    task.remove();
+}
+
+
+function relocateToUncoming(event) {
+    let task = event.currentTarget.parentNode.parentNode;
+    let taskValue = task.querySelector('.enterTask').textContent;
+    let taskDeadline = task.querySelector('.deadline').textContent;
+    let taskID = task.querySelector('#taskID').textContent;
+    taskDeadline = taskDeadline.substring(taskDeadline.indexOf(" ") + 1)
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
+    fetch('/relocateToUncoming', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            taskValue: taskValue,
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            taskDeadline: taskDeadline,
+            thirdSectionName: thirdSectionName,
+            taskID: taskID
+        })
+    })
+    task.remove();
+}
+
+function editTask(event) {
+    let task = event.currentTarget.parentNode.parentNode;
+    if(!task.querySelector('.check')){
+        let oldTaskValue = task.querySelector('.enterTask').textContent;
+        task.removeAttribute('onclick');
+        task.style.cursor = 'default';
+        task.querySelector('.enterTask').outerHTML = `
+            <textarea class="enterTask">${oldTaskValue}</textarea> 
+            <i class="fa-solid fa-check check" onclick="acceptChanges(event)"></i>
+        `;
+        task.querySelector('.enterTask').style.marginLeft = '20px';
+        task.querySelector('.enterTask').style.height = '210px';
+    }
+}
+
+function acceptChanges(event) {
+    let task = event.currentTarget.parentNode.parentNode;
+    task.setAttribute('onclick', 'openTask(event)');
+    let taskValue = task.querySelector('.enterTask').value;
+    let taskDeadline = task.querySelector('.deadline').textContent;
+    let taskID = task.querySelector('#taskID').textContent;
+    taskDeadline = taskDeadline.substring(taskDeadline.indexOf(" ") + 1);
+    let Category = document.querySelector('.active');
+    let activeCategory = Category.querySelector('.taskStatus').textContent;
+    if(location.pathname == "/app/firstSection/"){
+        var firstSectionName = document.querySelector('.firstSection').textContent;
+    }
+    if(location.pathname == "/app/secondSection/"){
+        var secondSectionName = document.querySelector('.secondSection').textContent;
+    }
+    if(location.pathname == "/app/thirdSection/"){
+        var thirdSectionName = document.querySelector('.thirdSection').textContent;
+    }
+    fetch('/acceptChanges', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            taskValue: taskValue,
+            firstSectionName: firstSectionName,
+            secondSectionName: secondSectionName,
+            taskDeadline: taskDeadline,
+            thirdSectionName: thirdSectionName,
+            taskID: taskID,
+            activeCategory: activeCategory
+        })
+    })
+    task.classList.remove('openTask')
+    task.style.cursor = 'default';
+    task.querySelector('.enterTask').outerHTML = `
+        <p class="enterTask">${taskValue}</p>
+    `;
+    task.querySelector('.enterTask').style.marginLeft = '';
+    task.querySelector('.enterTask').style.height = '';
+    task.classList.remove('openTask')
+    if(task.querySelector('.edit') ||  task.querySelector('.relocate')){
+        task.querySelector('.taskDesc').querySelector('.edit').remove();
+        task.querySelector('.taskDesc').querySelector('.relocate').remove();
+    }
+    task.querySelector('.taskDesc').style.paddingBottom = '';
+    task.querySelector('.enterTask').style.paddingBottom = '';
+    if(task.querySelector('.radio')){
+        task.querySelector('.radio').style.marginBottom = '';
+    }
+    task.querySelector('.trash').style.marginBottom = '';
+    task.querySelector('.enterTask').style.wordBreak = 'unset';
+    task.querySelector('.check').remove();
+    task.style.cursor = 'pointer';
+    task.querySelector('.enterTask').outerHTML = `<p class="enterTask">${taskValue}</p>`;
 }

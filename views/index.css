@@ -109,6 +109,8 @@ body{
     font-size: 16px;
     color: #18ACCD;
     position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 .taskDesc{
     border-right: 1px solid #000;
@@ -117,6 +119,7 @@ body{
     align-items: center;
     padding-left: 20px;
     padding-right: 100px;
+    position: relative;
 }
 .taskDesc input{
     background-color: #fff;
@@ -248,9 +251,11 @@ input::placeholder{
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
-    overflow-y: scroll;
+    height: 500px;
+    overflow-y: auto;
     margin-top: 20px;
+    box-sizing: border-box;
+    padding-bottom: 100px;
 }
 .taskCategory{
     display: flex;
@@ -425,6 +430,8 @@ input::placeholder{
 }
 .taskText p {
     margin-left: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .personalization{
     border: 1px solid #000;
@@ -451,4 +458,59 @@ input::placeholder{
 }
 .wrapPersonalization{
     margin-top: -290px;
+}
+.openTask{
+    height: 300px;
+}
+.enterTask{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 530px;
+    resize: none;
+    outline: none;
+}
+.edit{
+    background: #18ACCD;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .3s;
+    border: none;
+    border: 1px solid #18ACCD;
+    border-radius: 13px;
+    padding: 10px 5px;
+    position: absolute;
+    width: 85%;
+    bottom: 10px;
+    text-align: center;
+}
+.edit:hover {
+    background-color: #376699;
+    transition: .3s;
+}
+.relocate{
+    background: #18ACCD;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .3s;
+    border: none;
+    border: 1px solid #18ACCD;
+    border-radius: 13px;
+    padding: 10px 5px;
+    position: absolute;
+    width: 85%;
+    bottom: 60px;
+    text-align: center;
+}
+.relocate:hover {
+    background-color: #376699;
+    transition: .3s;
+}
+#taskID{
+    display: none;
+}
+.check{
+    font-size: 30px;
+    cursor: pointer;
 }
